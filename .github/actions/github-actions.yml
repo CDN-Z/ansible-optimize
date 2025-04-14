@@ -1,0 +1,14 @@
+name: ansible
+inputs:
+    playbook:
+        required: true
+        default: playbook.yml
+    inventory:
+        required: true
+        default: localhost
+runs:
+    using: "docker"
+    image: 'Dockerfile'
+    args:
+        - ${{ inputs.playbook }}
+        - ${{ inputs.inventory }}
