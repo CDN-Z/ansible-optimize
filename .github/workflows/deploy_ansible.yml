@@ -1,12 +1,8 @@
 name: deploy ansible
 
 on:
-  push:
-    branches:
-      - tri
   pull_request:
-    branches:
-      - tri
+    branches: ["main", "stable", "release/v*"]
 
 jobs:
   build:
