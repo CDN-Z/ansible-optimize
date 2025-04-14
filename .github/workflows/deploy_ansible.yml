@@ -15,6 +15,9 @@ jobs:
         uses: ansible/ansible-lint@v25.2.1
         with:
           targets: ""
+          setup_python: "true"
+          working_directory: ""
+          requirements_file: ""
 
   deployAnsible:
     needs: build
