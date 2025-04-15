@@ -1,5 +1,6 @@
 FROM ubuntu:20.04
 
+WORKDIR /root/ansible-optimize
 RUN apt update -y
 RUN apt-get install ansible -y
 #RUN ansible --version
@@ -7,7 +8,7 @@ RUN apt-get install ansible -y
 RUN ansible-galaxy collection install ansible.posix
 
 #COPY * ./ dont work 
-#COPY *.yml ./
+COPY *.yml ./
 #COPY *.cfg ./
 #COPY roles ./roles
 #COPY contrib ./contrib
@@ -20,4 +21,4 @@ COPY entrypoint.sh /entrypoint.sh
 
 RUN chmod +x /entrypoint.sh
 
-ENTRYPOINT ["bash","/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]

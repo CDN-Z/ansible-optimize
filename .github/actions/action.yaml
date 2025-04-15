@@ -1,14 +1,14 @@
 name: ansible
-inputs:
-    playbook:
-        required: true  #if not copy from dockerfile need set true  
-        default: optimize-sysctl.yml
-    inventory:
-        required: true
-        default: localhost
+#inputs:
+#    playbook:
+#        required: true  #if not copy from dockerfile need set true  
+#        default: optimize-sysctl.yml
+#    inventory:
+#        required: true
+#        default: localhost
 runs:
     using: "docker"
     image: 'Dockerfile'
-    args:
-        - ${{ inputs.playbook }}
-        - ${{ inputs.inventory }}
+#    args:
+#        - ${{ inputs.playbook }}
+#        - ${{ inputs.inventory }}
