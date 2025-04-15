@@ -1,4 +1,8 @@
 #!/bin/bash
 
-### $1 $2 input from github action
-ansible-playbook "$1" -i "$2"
+# $1 = playbook
+# $2 = inventory
+set -e
+
+#ansible-playbook "$1" -i "$2"
+ansible-playbook "$1" -i localhost

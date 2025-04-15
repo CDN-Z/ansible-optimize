@@ -1,33 +1,32 @@
 name: deploy ansible
 
 on:
-  pull_request:
-    branches: ["main", "stable", "release/v*", "tri"]
   push:
     branches: [main]
+  pull_request:
+    branches: ["*"]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: checkout repo
+      - name: checkout-repo
         uses: actions/checkout@v4
 
-      - name: run-ansible-lint
-        uses: ansible/ansible-lint@v25.2.1
+#      - name: run-ansible-lint
+#        uses: ansible/ansible-lint@v25.2.1
+
         with:
-          targets: ""
+          targets: ".github/actions"
           setup_python: true
-          working_directory: ""
-          requirements_file: ""
 
   deployAnsible:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
 
-      - uses: ./.github/actions/ansible
-        with: 
-          playbook: playbook.yml
+      - uses: ./.github/actions
+        with:
+          playbook: "optimize-sysctl.yml"
           inventory: localhost

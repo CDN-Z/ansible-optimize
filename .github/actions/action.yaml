@@ -1,10 +1,10 @@
 name: ansible
 inputs:
     playbook:
-        required: true
-        default: playbook.yml
+        required: false  #if not copy from dockerfile need set true  
+        default: optimize-sysctl.yml
     inventory:
-        required: true
+        required: false
         default: localhost
 runs:
     using: "docker"
