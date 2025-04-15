@@ -4,5 +4,4 @@
 # $2 = inventory
 set -e
 
-#ansible-playbook "$1" -i "$2"
-ansible-playbook "$1" -i localhost
+ansible-playbook "$1" -i "$2"
