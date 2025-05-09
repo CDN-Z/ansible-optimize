@@ -1,0 +1,47 @@
+name: Build Infrastructure
+
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  packer-build:
+    #runs-on: ubuntu-latest  # Can be changed based on your needs
+    runs-on: self-hosted
+
+    container:
+      image: ghcr.io/catthehacker/ubuntu:act-latest
+      # volumes:
+      #   - ansible:/ansible
+      #   - packer:/packer
+      #   - terraform:/terraform
+      #   - vagrant:/vagrant
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Set up Docker Build Environment
+        run: |
+          echo "Setting up Docker environment for Packer build"
+
+      - name: Set environment variables from GitHub Secrets
+        run: |
+          echo "VCENTER_USER=${{ secrets.VCENTER_USER }}" >> $GITHUB_ENV
+          echo "VCENTER_PASSWORD=${{ secrets.VCENTER_PASSWORD }}" >> $GITHUB_ENV
+          echo "VCENTER_SERVER=${{ secrets.VCENTER_SERVER }}" >> $GITHUB_ENV
+
+      - name: Run Packer Build
+        uses: ./.github/actions  # Reference custom action (Docker container)
+        with:
+          vcenter_user: ${{ secrets.VCENTER_USER }}
+          vcenter_password: ${{ secrets.VCENTER_PASSWORD }}
+          vcenter_server: ${{ secrets.VCENTER_SERVER }}
+          

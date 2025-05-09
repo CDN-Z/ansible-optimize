@@ -1,0 +1,18 @@
+name: "Build Infrastructure"
+description: "Build VM image using Packer with vSphere"
+
+inputs:
+  vcenter_user:
+    required: true
+  vcenter_password:
+    required: true
+  vcenter_server:
+    required: true
+
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  env:
+    VCENTER_USER: ${{ inputs.vcenter_user }}
+    VCENTER_PASSWORD: ${{ inputs.vcenter_password }}
+    VCENTER_SERVER: ${{ inputs.vcenter_server }}
