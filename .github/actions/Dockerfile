@@ -1,24 +1,21 @@
 FROM ubuntu:20.04
 
-WORKDIR /root/ansible-optimize
-RUN apt update -y
-RUN apt-get install ansible -y
-#RUN ansible --version
-#RUN ansible-galaxy collection list |grep posix
-RUN ansible-galaxy collection install ansible.posix
+# Set the frontend to avoid prompts
+ENV DEBIAN_FRONTEND=noninteractive
 
-#COPY * ./ dont work 
-COPY *.yml ./
-#COPY *.cfg ./
-#COPY roles ./roles
-#COPY contrib ./contrib
-#COPY inventory ./inventory
-#COPY library ./library
-#COPY extra_playbooks ./extra_playbooks
-#COPY playbooks ./playbooks
-#COPY plugins ./plugins
+# Install Terraform, Packer, and Ansible
+RUN apt-get update && \
+    apt-get install -y curl unzip git bash ansible gnupg && \
+    curl -fsSL https://apt.releases.hashicorp.com/gpg | gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg && \
+    echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com focal main" > /etc/apt/sources.list.d/hashicorp.list && \
+    apt-get update && \
+    apt-get install -y terraform packer xorriso
+#RUN mkdir packer ansible terraform vagrant
+# Copy the entrypoint script into the container
 COPY entrypoint.sh /entrypoint.sh
-
 RUN chmod +x /entrypoint.sh
 
+#EXPOSE 8826 if using http_directory 
+
+# Set the entrypoint of the Docker container to be the entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]

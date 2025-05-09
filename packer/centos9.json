@@ -1,0 +1,78 @@
+{
+    "builders": [
+      {
+        "type": "vsphere-iso",
+        "vcenter_server": "{{ user `vcenter_server` }}",
+        "username": "{{ user `vcenter_user` }}",
+        "password": "{{ user `vcenter_password` }}",
+        "insecure_connection": "true",
+  
+        "datacenter": "office",
+        "host": "192.168.10.20",
+        "datastore": "datastore1",
+  
+        "network_adapters": [
+        {
+          "network": "vlan16",
+          "network_card": "vmxnet3"
+        }
+        ],
+
+        "folder": "Templates",
+        "vm_name": "centos9-template",
+        "convert_to_template": true,
+  
+        "guest_os_type": "centos8_64Guest",
+  
+        "CPUs": 4,
+        "RAM": 4096,
+        "disk_controller_type": "pvscsi",
+        "storage": [
+        {
+          "disk_size": "30720",
+          "disk_thin_provisioned": true,
+          "disk_controller_index": 0
+        }
+        ],
+  
+        "iso_paths": [
+          "[esxi02-datastore2] ISO/CentOS-Stream-9-20240520.0-x86_64-boot.iso"
+        ],
+  
+        "ssh_username": "packer",
+        "ssh_password": "packer",
+        "ssh_timeout": "2m",
+        "http_directory": ".",
+        "http_port_min": "8826",
+        "http_port_max": "8826",
+
+  
+        "cd_files": [
+          "./scripts/centos9/kickstart.cfg"
+        ],
+  
+        "boot_command": [
+          "<esc><wait>",
+          "linux inst.text inst.ks=cdrom:/kickstart.cfg <enter><wait>"
+        ]
+      }
+    ],
+    "provisioners": [
+      {
+        "type": "shell",
+        "inline": [
+          "dnf update -y",
+          "dnf install -y epel-release",
+          "dnf install -y vim curl wget net-tools",
+          "useradd -m ansible && echo 'ansible:ansible' | chpasswd",
+          "echo 'ansible ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers"
+        ]
+      }
+    ],
+    "variables": {
+      "vcenter_user": "{{ env `VCENTER_USER` }}",
+      "vcenter_password": "{{ env `VCENTER_PASSWORD` }}",
+      "vcenter_server": "{{ env `VCENTER_SERVER` }}"
+    }
+  }
+  

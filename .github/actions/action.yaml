@@ -1,14 +1,18 @@
-name: ansible
-#inputs:
-#    playbook:
-#        required: true  #if not copy from dockerfile need set true  
-#        default: optimize-sysctl.yml
-#    inventory:
-#        required: true
-#        default: localhost
+name: "Build Infrastructure"
+description: "Build VM image using Packer with vSphere"
+
+inputs:
+  vcenter_user:
+    required: true
+  vcenter_password:
+    required: true
+  vcenter_server:
+    required: true
+
 runs:
-    using: "docker"
-    image: 'Dockerfile'
-#    args:
-#        - ${{ inputs.playbook }}
-#        - ${{ inputs.inventory }}
+  using: "docker"
+  image: "Dockerfile"
+  env:
+    VCENTER_USER: ${{ inputs.vcenter_user }}
+    VCENTER_PASSWORD: ${{ inputs.vcenter_password }}
+    VCENTER_SERVER: ${{ inputs.vcenter_server }}
