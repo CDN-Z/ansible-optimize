@@ -47,7 +47,7 @@ jobs:
 
 
       - name: show owner files
-        run: ls -al
+        run: ls -al echo ${{ github.workspace }}
 
       - name: Run Packer Build
         uses: ./.github/actions  # Reference custom action (Docker container)
