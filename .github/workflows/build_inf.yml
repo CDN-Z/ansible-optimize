@@ -23,6 +23,12 @@ jobs:
       #   - vagrant:/vagrant
 
     steps:
+      - name: switch user
+        run: su ansible
+
+      - name: show user
+        run: whoami
+
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
