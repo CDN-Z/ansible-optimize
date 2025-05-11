@@ -42,6 +42,9 @@ jobs:
         run: |
           echo "$USER"
 
+      - name: echo workplace
+        run: echo ${{ github.workspace }}
+
       - name: Run Packer Build
         uses: ./.github/actions  # Reference custom action (Docker container)
         with:
