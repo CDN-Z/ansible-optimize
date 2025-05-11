@@ -26,6 +26,9 @@ jobs:
       - name: show user
         run: whoami
 
+      - name: Fix permissions
+        run: sudo chown -R $USER:$USER .
+
       # - name: switch user
       #   run: su ansible
 
