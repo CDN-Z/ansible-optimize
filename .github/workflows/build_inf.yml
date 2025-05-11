@@ -29,16 +29,17 @@ jobs:
       - name: Fix permissions
         run: sudo chown -R $USER:$USER .
 
-      # - name: switch user
-      #   run: su ansible
-
-      # - name: show user
-      #   run: whoami
 
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           submodules: true
+
+      # - name: switch user
+      #   run: su ansible
+
+      # - name: show user
+      #   run: whoami
 
       - name: Set up Docker Build Environment
         run: |
