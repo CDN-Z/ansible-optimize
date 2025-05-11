@@ -38,6 +38,10 @@ jobs:
           echo "VCENTER_PASSWORD=${{ secrets.VCENTER_PASSWORD }}" >> $GITHUB_ENV
           echo "VCENTER_SERVER=${{ secrets.VCENTER_SERVER }}" >> $GITHUB_ENV
 
+      - name: cat user
+        run: |
+          echo "$USER"
+
       - name: Run Packer Build
         uses: ./.github/actions  # Reference custom action (Docker container)
         with:
