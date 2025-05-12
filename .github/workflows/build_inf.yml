@@ -13,7 +13,9 @@ jobs:
   packer-build:
     #runs-on: ubuntu-latest  # Can be changed based on your needs
     runs-on: self-hosted
-
+    defaults:
+      run:
+        working-directory: ./
     container:
       image: ghcr.io/catthehacker/ubuntu:act-latest
       # volumes:
@@ -23,44 +25,14 @@ jobs:
       #   - vagrant:/vagrant
 
     steps:
-      - name: show user
-        run: whoami
-
-      - name: Fix permissions
-        run: sudo chown -R $USER:$USER .
-
-
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           submodules: true
 
-      # - name: switch user
-      #   run: su ansible
-
-      # - name: show user
-      #   run: whoami
-
       - name: Set up Docker Build Environment
         run: |
           echo "Setting up Docker environment for Packer build"
-
-      - name: Set environment variables from GitHub Secrets
-        run: |
-          echo "VCENTER_USER=${{ secrets.VCENTER_USER }}" >> $GITHUB_ENV
-          echo "VCENTER_PASSWORD=${{ secrets.VCENTER_PASSWORD }}" >> $GITHUB_ENV
-          echo "VCENTER_SERVER=${{ secrets.VCENTER_SERVER }}" >> $GITHUB_ENV
-
-      - name: cat user
-        run: |
-          echo "$USER"
-
-      - name: echo workplace
-        run: echo ${{ github.workspace }}
-
-
-      - name: show owner files
-        run: ls -al ${{ github.workspace }}
 
       - name: Run Packer Build
         uses: ./.github/actions  # Reference custom action (Docker container)
