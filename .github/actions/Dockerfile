@@ -15,12 +15,6 @@ RUN apt-get update && \
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-RUN git clone https://github.com/CDN-Z/ansible-optimize.git
-
-RUN git fetch --all
-
-RUN git checkout tri
-
 #EXPOSE 8826 if using http_directory 
 
 # Set the entrypoint of the Docker container to be the entrypoint.sh
