@@ -15,8 +15,8 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: self-hosted
 
-    #container:
-    #  image: ghcr.io/catthehacker/ubuntu:act-latest
+    container:
+      image: ghcr.io/catthehacker/ubuntu:act-latest
 
     steps:
       - name: Checkout code
