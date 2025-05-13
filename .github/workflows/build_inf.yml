@@ -27,18 +27,18 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: true
-      - name: run git clone
-        run: |
-          ls -al
-          cd ansible-optimize
-          git checkout tri
-          git clone https://github.com/CDN-Z/ansible-optimize.git
-          git fetch --all
-          git checkout tri
 
       - name: Set up Docker Build Environment
         run: |
           echo "Setting up Docker environment for Packer build"
+
+      - name: run git clone
+        run: |
+          ls -al
+          git clone https://github.com/CDN-Z/ansible-optimize.git
+          cd ansible-optimize
+          git fetch --all
+          git checkout tri
 
       - name: Run Packer Build
         uses: ./.github/actions  # Reference custom action (Docker container)
