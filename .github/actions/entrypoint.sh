@@ -23,10 +23,6 @@ packer plugins install github.com/hashicorp/vsphere
 cd "${PACKER_DIR:-./packer}"
 pwd
 
-ls -al ./
-ls -al /root/ansible-optimize/packer
-ls -al ../
-
 # Validate template
 packer fmt -check -diff .
 packer validate centos9.json
