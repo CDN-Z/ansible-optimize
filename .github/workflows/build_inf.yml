@@ -4,10 +4,10 @@ name: Build Infrastructure
 on:
   push:
     branches:
-      - main
+      - tri
   pull_request:
     branches:
-      - main
+      - tri
 
 jobs:
   packer-build:
@@ -37,12 +37,6 @@ jobs:
       - name: Set up Docker Build Environment
         run: |
           echo "Setting up Docker environment for Packer build"
-
-      - name: Set environment variables from GitHub Secrets
-        run: |
-          echo "VCENTER_USER=${{ secrets.VCENTER_USER }}" >> $GITHUB_ENV
-          echo "VCENTER_PASSWORD=${{ secrets.VCENTER_PASSWORD }}" >> $GITHUB_ENV
-          echo "VCENTER_SERVER=${{ secrets.VCENTER_SERVER }}" >> $GITHUB_ENV
 
       - name: Run Packer Build
         uses: ./.github/actions  # Reference custom action (Docker container)

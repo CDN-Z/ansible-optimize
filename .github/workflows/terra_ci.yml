@@ -3,7 +3,7 @@ name: Terraform CI/CD Pipeline
 on:
   push:
     branches:
-      - main
+      - tri
   workflow_run:
     workflows: [Build Infrastructure]
     types: [completed]
